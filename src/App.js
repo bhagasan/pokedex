@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import MainPage from "./components/pages/MainPages";
+import MainPage from "./components/pages/MainPage";
 import Splash from "./components/pages/SplashScreen";
 
 function App() {
