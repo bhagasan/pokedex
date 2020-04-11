@@ -6,12 +6,16 @@ import Axios from "axios";
 import Card from "../../commons/Card";
 import { Container } from "../../commons/Layouts";
 import Pagination from "../../commons/Pagination";
+import Filter from "../../commons/Filter";
 
 export default function MainPage(props) {
   const [pokemons, setPokemons] = useState([]);
   const [pokeDetail, setPokeDetail] = useState([]);
   const [nextList, setNextList] = useState();
   const [prevList, setPrevList] = useState();
+  const [dataFilter, setDataFilter] = useState({});
+  const [dataFilterApplied, setDataFilterApplied] = useState();
+  const [filterSelected, setFilterSelected] = useState([]);
 
   useEffect(() => {
     Axios.get("https://pokeapi.co/api/v2/pokemon/").then((res) => {
@@ -20,6 +24,14 @@ export default function MainPage(props) {
       setPokemons(data.results);
       setNextList(data.next);
       setPrevList(data.previous);
+    });
+
+    Axios.get("https://pokeapi.co/api/v2/type/").then((res) => {
+      const { data } = res;
+      const temp = data.results.map(({ name }) => name);
+      setDataFilter({
+        types: temp,
+      });
     });
   }, []);
 
@@ -34,7 +46,7 @@ export default function MainPage(props) {
             id,
             name,
             types,
-            image: `https://pokeres.bastionbot.org/images/pokemon/${id}.png`,
+            // image: `https://pokeres.bastionbot.org/images/pokemon/${id}.png`,
           },
         ]);
       });
@@ -45,12 +57,7 @@ export default function MainPage(props) {
     const temp = data.map((d) => {
       return (
         <Link key={`${d.id}-${d.name}`} to={`/homepage/${d.name}`}>
-          <Card
-            className="pokeCard"
-            text={d.name}
-            image={d.image}
-            label={d.types[0].type.name}
-          />
+          <Card text={d.name} image={d.image} label={d.types[0].type.name} />
         </Link>
       );
     });
@@ -67,6 +74,10 @@ export default function MainPage(props) {
       Axios.get(url).then((res) => {
         const { data } = res;
 
+        if (dataFilterApplied) {
+          applyFilter(dataFilterApplied);
+        }
+
         setPokemons(data.results);
         setNextList(data.next);
         setPrevList(data.previous);
@@ -74,10 +85,38 @@ export default function MainPage(props) {
     };
   }
 
+  function selectFilterItem(event) {
+    const { name } = event.target;
+    const temp = filterSelected;
+    const index = temp.indexOf(name);
+    if (index > -1) {
+      temp.splice(index, 1);
+    } else {
+      temp.push(name);
+    }
+    applyFilter(temp);
+    setFilterSelected(temp);
+  }
+
+  function applyFilter(data) {
+    const temp = [];
+    pokeDetail.forEach((list) => {
+      if (data.includes(list.types[0].type.name)) {
+        temp.push(list);
+      }
+    });
+    if (data.length > 0) {
+      setDataFilterApplied(temp);
+    } else {
+      setDataFilterApplied(null);
+    }
+  }
+
   return (
     <Wrapper>
       <Container>
-        <CardList>{renderList(pokeDetail)}</CardList>
+        <Filter data={dataFilter} filterHandler={selectFilterItem} />
+        <CardList>{renderList(dataFilterApplied || pokeDetail)}</CardList>
         <PaginationWrapper>
           <Pagination
             onPrev={paginationHandler(prevList)}
@@ -101,12 +140,8 @@ const Wrapper = Styled.div`
 `;
 
 const CardList = Styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(5, max-content);
+  grid-gap: 12px;
   margin-top: 100px;
-
-  .pokeCard{
-    margin-bottom: 16px;
-  }
 `;

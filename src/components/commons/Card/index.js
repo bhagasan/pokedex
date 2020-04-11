@@ -52,7 +52,7 @@ const Wrapper = Styled.div`
       left: 10px;
       text-transform: capitalize;
       color: ${({ label }) =>
-        lightColor.includes(label) ? "#515151" : "white"} ;
+        lightColor.includes(label) ? Color.black : "white"} ;
       font-weight: 800;
     }
 `;

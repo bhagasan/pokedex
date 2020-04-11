@@ -19,4 +19,5 @@ export const Color = {
   fairy: "#F5F5F8",
   unknown: "#eaeaea",
   shadow: "#7F7F7F",
+  black: "#515151",
 };
