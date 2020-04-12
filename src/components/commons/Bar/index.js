@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Styled, { css } from "styled-components";
 import { Color } from "../Library";
 
@@ -63,3 +64,7 @@ const Statistic = Styled.div`
     }
   }}
 `;
+
+Bar.propTypes = {
+  value: PropTypes.number.isRequired,
+};

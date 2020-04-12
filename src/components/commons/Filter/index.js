@@ -1,5 +1,6 @@
 import React, { Fragment, useRef, useEffect, useState } from "react";
 import Styled, { css } from "styled-components";
+import PropTypes from "prop-types";
 import { Color } from "../Library";
 
 import IconFilter from "../../../assets/icons/filter.svg";
@@ -72,6 +73,16 @@ export default function Filter(props) {
     </Wrapper>
   );
 }
+
+Filter.propTypes = {
+  data: PropTypes.object.isRequired,
+  filterHandler: PropTypes.func.isRequired,
+  labels: PropTypes.array,
+};
+
+Filter.defaultProps = {
+  labels: [],
+};
 
 const LabelActived = Styled.div`
   position: absolute;

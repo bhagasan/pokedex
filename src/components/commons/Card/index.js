@@ -1,5 +1,6 @@
 import React from "react";
 import Styled, { css } from "styled-components";
+import PropTypes from "prop-types";
 
 import Label from "../Label";
 import { Color } from "../Library";
@@ -12,11 +13,21 @@ export default function Card(props) {
     <Wrapper label={label} {...props}>
       <img src={image} alt="pokemon" />
       <span>{text}</span>
-      <Label className="label">{label}</Label>
+      {label && <Label className="label">{label}</Label>}
       <img className="pokeball" src={PokeBall} alt="pokeball" />
     </Wrapper>
   );
 }
+
+Card.propTypes = {
+  image: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  label: PropTypes.string,
+};
+
+Card.defaultProps = {
+  label: null,
+};
 
 const Wrapper = Styled.div`
   border-radius: 8px;

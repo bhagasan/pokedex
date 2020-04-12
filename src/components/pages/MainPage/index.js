@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
-import { Link } from "react-router-dom";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { Color } from "../../commons/Library";
 
-import Card from "../../commons/Card";
 import { Container } from "../../commons/Layouts";
+import Card from "../../commons/Card";
 import Pagination from "../../commons/Pagination";
 import Filter from "../../commons/Filter";
 import DetailPage from "../Detail";
 import Loading from "../../commons/Loading";
+import PokeBall from "../../../assets/icons/pokeball.svg";
 
 export default function MainPage() {
   const [pokemons, setPokemons] = useState([]);
   const [pokeDetail, setPokeDetail] = useState([]);
   const [nextList, setNextList] = useState();
-  const [prevList, setPrevList] = useState();
   const [dataFilter, setDataFilter] = useState({});
   const [dataFilterApplied, setDataFilterApplied] = useState();
   const [filterSelected, setFilterSelected] = useState([]);
   const [filterLabels, setFilterLabels] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingSmall, setIsLoadingSmall] = useState(false);
 
   useEffect(() => {
     Axios.get("https://pokeapi.co/api/v2/pokemon/").then((res) => {
@@ -29,7 +30,6 @@ export default function MainPage() {
 
       setPokemons(data.results);
       setNextList(data.next);
-      setPrevList(data.previous);
 
       setIsLoading(false);
     });
@@ -79,6 +79,7 @@ export default function MainPage() {
   function paginationHandler(url) {
     if (!url) return null;
     return () => {
+      setIsLoadingSmall(true);
       Axios.get(url).then((res) => {
         const { data } = res;
 
@@ -88,7 +89,7 @@ export default function MainPage() {
 
         setPokemons(data.results);
         setNextList(data.next);
-        setPrevList(data.previous);
+        setIsLoadingSmall(false);
       });
     };
   }
@@ -124,7 +125,7 @@ export default function MainPage() {
 
   return (
     <Wrapper>
-      <Loading isLoading={isLoading} />
+      <Loading isLoading={isLoading} type="full" />
       <Container>
         <Title>Pokedex</Title>
         <Filter
@@ -134,11 +135,17 @@ export default function MainPage() {
         />
         <CardList>{renderList(dataFilterApplied || pokeDetail)}</CardList>
         <PaginationWrapper>
-          <Pagination
-            onPrev={paginationHandler(prevList)}
-            onNext={paginationHandler(nextList)}
-          />
+          {isLoadingSmall ? (
+            <Loading isLoading={isLoadingSmall} />
+          ) : (
+            <Pagination onNext={paginationHandler(nextList)} />
+          )}
         </PaginationWrapper>
+        <img
+          className="pokeball-main"
+          src={PokeBall}
+          alt="pokebal background"
+        />
       </Container>
       <Route path="/details/:id" component={DetailPage} />
     </Wrapper>
@@ -154,7 +161,16 @@ const PaginationWrapper = Styled.div`
 
 const Wrapper = Styled.div`
   position: relative;
-  
+  .pokeball-main{
+    position: absolute;
+    top: -80px;
+    left: -162px;
+    filter: invert(1);
+    opacity: .05;
+    width: 390px;
+    z-index: -1;
+    pointer-events: none;
+  }
 `;
 
 const Title = Styled.h1`

@@ -1,5 +1,6 @@
 import React from "react";
 import Styled, { css } from "styled-components";
+import PropTypes from "prop-types";
 
 export default function Label(props) {
   const { children, size } = props;
@@ -9,6 +10,15 @@ export default function Label(props) {
     </Wrapper>
   );
 }
+Label.propTypes = {
+  children: PropTypes.string,
+  size: PropTypes.oneOf(["default", "large"]),
+};
+
+Label.defaultProps = {
+  size: "default",
+  children: "undefined",
+};
 
 const Wrapper = Styled.div`
   font-size: 12px;
@@ -21,7 +31,7 @@ const Wrapper = Styled.div`
   text-transform: capitalize;
 
   ${({ size }) =>
-    size &&
+    size === "large" &&
     css`
       font-size: 24px;
       border-radius: 30px;

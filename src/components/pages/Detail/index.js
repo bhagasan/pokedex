@@ -52,10 +52,10 @@ export default function ItemDetailPage() {
     if (data) {
       const { stats } = data;
       let total = 0;
-      const temp = stats.map((d) => {
+      const temp = stats.map((d, idx) => {
         total += d.base_stat;
         return (
-          <Fragment key={d}>
+          <Fragment key={`${d}-${idx}`}>
             <label>{d.stat.name}</label>
             <Bar value={d.base_stat} />
           </Fragment>
@@ -73,7 +73,7 @@ export default function ItemDetailPage() {
 
   return (
     <Wrapper bgColor={bgColor}>
-      <Loading isLoading={isLoading || imgLoading} />
+      <Loading isLoading={isLoading || imgLoading} type="full" />
       <MainInfo bgColor={bgColor}>
         <h1>{profile && profile.name}</h1>
         <Label size="large">{profile && profile.types[0].type.name}</Label>
