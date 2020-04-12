@@ -57,7 +57,7 @@ export default function MainPage(props) {
   function renderList(data) {
     const temp = data.map((d) => {
       return (
-        <Link key={`${d.id}-${d.name}`} to={`/homepage/${d.name}`}>
+        <Link key={`${d.id}-${d.name}`} to={`/details/${d.id}`}>
           <Card text={d.name} image={d.image} label={d.types[0].type.name} />
         </Link>
       );
@@ -116,7 +116,7 @@ export default function MainPage(props) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper id="list-page" className="list-page transition-item">
       <Container>
         <Filter
           data={dataFilter}

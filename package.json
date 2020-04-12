@@ -14,6 +14,8 @@
     "react-router-dom": "^5.1.2",
     "react-router-page-transition": "^3.1.0",
     "react-scripts": "3.4.1",
+    "react-tabs": "^3.1.0",
+    "rx": "^4.1.0",
     "styled-components": "^5.1.0"
   },
   "scripts": {

@@ -20,4 +20,8 @@ export const Color = {
   unknown: "#eaeaea",
   shadow: "#7F7F7F",
   black: "#515151",
+  red: "#F66C6C",
+  green: "#47D2B2",
+  blue: "#46b3e6",
+  cream: "#ebebe3",
 };

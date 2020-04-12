@@ -1,17 +1,24 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PageTransition from "react-router-page-transition";
 
 import MainPage from "./components/pages/MainPage";
-import Splash from "./components/pages/SplashScreen";
+import DetailPage from "./components/pages/Detail";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Switch>
-          <Route exact path="/" component={Splash} />
-          <Route exact path="/homepage" component={MainPage} />
-        </Switch>
+        <Route
+          render={({ location }) => (
+            <PageTransition>
+              <Switch location={location}>
+                <Route exact path="/" component={MainPage} />
+                <Route path="/details/:id" component={DetailPage} />
+              </Switch>
+            </PageTransition>
+          )}
+        />
       </Router>
     </div>
   );
