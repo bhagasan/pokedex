@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import { Link } from "react-router-dom";
 import Axios from "axios";
+import { Route } from "react-router-dom";
+import { Color } from "../../commons/Library";
 
 import Card from "../../commons/Card";
 import { Container } from "../../commons/Layouts";
 import Pagination from "../../commons/Pagination";
 import Filter from "../../commons/Filter";
+import DetailPage from "../Detail";
+import Loading from "../../commons/Loading";
 
 export default function MainPage() {
   const [pokemons, setPokemons] = useState([]);
@@ -17,6 +21,7 @@ export default function MainPage() {
   const [dataFilterApplied, setDataFilterApplied] = useState();
   const [filterSelected, setFilterSelected] = useState([]);
   const [filterLabels, setFilterLabels] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     Axios.get("https://pokeapi.co/api/v2/pokemon/").then((res) => {
@@ -25,6 +30,8 @@ export default function MainPage() {
       setPokemons(data.results);
       setNextList(data.next);
       setPrevList(data.previous);
+
+      setIsLoading(false);
     });
 
     Axios.get("https://pokeapi.co/api/v2/type/").then((res) => {
@@ -116,8 +123,10 @@ export default function MainPage() {
   }
 
   return (
-    <Wrapper id="list-page" className="list-page transition-item">
+    <Wrapper>
+      <Loading isLoading={isLoading} />
       <Container>
+        <Title>Pokedex</Title>
         <Filter
           data={dataFilter}
           filterHandler={selectFilterItem}
@@ -131,6 +140,7 @@ export default function MainPage() {
           />
         </PaginationWrapper>
       </Container>
+      <Route path="/details/:id" component={DetailPage} />
     </Wrapper>
   );
 }
@@ -145,6 +155,11 @@ const PaginationWrapper = Styled.div`
 const Wrapper = Styled.div`
   position: relative;
   
+`;
+
+const Title = Styled.h1`
+  font-size: 32px;
+  color: ${Color.black};
 `;
 
 const CardList = Styled.div`

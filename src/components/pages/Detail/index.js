@@ -4,6 +4,7 @@ import "react-tabs/style/react-tabs.css";
 import Axios from "axios";
 import Styled, { css } from "styled-components";
 import { Color } from "../../commons/Library";
+import Loading from "../../commons/Loading";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Bar from "../../commons/Bar";
@@ -16,12 +17,15 @@ export default function ItemDetailPage() {
   const img = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
   const [profile, setProfile] = useState();
   const [bgColor, setBgColor] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [imgLoading, setImgLoading] = useState(false);
 
   useEffect(() => {
     Axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => {
       const { data } = res;
       setProfile(data);
       setBgColor(data.types[0].type.name);
+      setIsLoading(false);
     });
   }, [id]);
 
@@ -68,31 +72,30 @@ export default function ItemDetailPage() {
   }
 
   return (
-    <div className="transition-item detail-page">
-      <Wrapper bgColor={bgColor}>
-        <MainInfo bgColor={bgColor}>
-          <h1>{profile && profile.name}</h1>
-          <Label size="large">{profile && profile.types[0].type.name}</Label>
-        </MainInfo>
-        <Thumbnail>
-          <img src={img} alt="pokemon" />
-        </Thumbnail>
-        <Details>
-          <Tabs>
-            <TabList>
-              <Tab>About</Tab>
-              <Tab>Base Stats</Tab>
-            </TabList>
-            <TabPanel>{renderAbout(profile)}</TabPanel>
-            <TabPanel>{renderStats(profile)}</TabPanel>
-          </Tabs>
-        </Details>
-        <Link className="back" to="/">
-          <img src={IconBack} alt="back" /> Back
-        </Link>
-        <img className="pokeball" src={PokeBall} alt="pokeball" />
-      </Wrapper>
-    </div>
+    <Wrapper bgColor={bgColor}>
+      <Loading isLoading={isLoading || imgLoading} />
+      <MainInfo bgColor={bgColor}>
+        <h1>{profile && profile.name}</h1>
+        <Label size="large">{profile && profile.types[0].type.name}</Label>
+      </MainInfo>
+      <Thumbnail>
+        <img src={img} alt="pokemon" onLoad={() => setImgLoading(false)} />
+      </Thumbnail>
+      <Details>
+        <Tabs>
+          <TabList>
+            <Tab>About</Tab>
+            <Tab>Base Stats</Tab>
+          </TabList>
+          <TabPanel>{renderAbout(profile)}</TabPanel>
+          <TabPanel>{renderStats(profile)}</TabPanel>
+        </Tabs>
+      </Details>
+      <Link className="back" to="/">
+        <img src={IconBack} alt="back" /> Back
+      </Link>
+      <img className="pokeball" src={PokeBall} alt="pokeball" />
+    </Wrapper>
   );
 }
 
@@ -149,6 +152,10 @@ const Details = Styled.div`
 `;
 
 const Wrapper = Styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 99;
   width: 100%;
   min-height: 100vh;
   display: flex;

@@ -31,6 +31,7 @@ const Wrapper = Styled.div`
     left: 10px;
   }
   :hover{
+    transform: scale(1.02);
   }
     img:not(.pokeball){
       width: 80px;
