@@ -80,8 +80,6 @@ const LabelActived = Styled.div`
   height: 42px;
   width: 800px;
   max-width: max-content;
-  /* padding-left: 50px;
-  padding-right: 10px; */
   background-color: white;
   z-index: -1;
   border-radius: 50px;
@@ -225,30 +223,5 @@ const Icon = Styled.button`
   img{
     width: 12px;
     opacity: .5;
-  }
-
-  &.save{
-    background-color: #47D2B2;
-    position: absolute;
-    right: 15px;
-    top: 7px;
-    width: auto;
-    border-radius: 8px;
-    color: white;
-    font-weight: 600;
-    padding-left: 10px;
-    padding-right: 10px;
-    :hover{
-      transform: none;
-    }
-    :active{
-      transform: scale(.9);
-    }
-    img{
-      filter: invert(1);
-      opacity: 1;
-      display: inline-block;
-      margin-right: 5px;
-    }
   }
 `;

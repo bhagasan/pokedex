@@ -1,7 +1,9 @@
 import React from "react";
-import Styled from "styled-components";
+import Styled, { css } from "styled-components";
 
+import Label from "../Label";
 import { Color } from "../Library";
+import PokeBall from "../../../assets/icons/pokeball.svg";
 
 export default function Card(props) {
   const { image, text, label } = props;
@@ -10,26 +12,11 @@ export default function Card(props) {
     <Wrapper label={label} {...props}>
       <img src={image} alt="pokemon" />
       <span>{text}</span>
-      <Label>{label}</Label>
+      <Label className="label">{label}</Label>
+      <img className="pokeball" src={PokeBall} alt="pokeball" />
     </Wrapper>
   );
 }
-
-const Label = Styled.div`
-  font-size: 12px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.15);
-  width: max-content;
-  border-radius: 10px;
-  padding: 4px 10px;
-  line-height: 1;
-  position: absolute;
-  top: 40px;
-  left: 10px;
-  text-transform: capitalize;
-`;
-
-const lightColor = ["electric", "normal", "fairy"];
 
 const Wrapper = Styled.div`
   border-radius: 8px;
@@ -37,13 +24,28 @@ const Wrapper = Styled.div`
   height: 120px;
   position: relative;
   background-color: ${({ label }) => Color[label]};
+
+  .label{
+    position: absolute;
+    top: 40px;
+    left: 10px;
+  }
   :hover{
   }
-    img{
+    img:not(.pokeball){
       width: 80px;
       position: absolute;
       bottom: 10px;
       right: 10px;
+      z-index: 1;
+    }
+    .pokeball{
+      position: absolute;
+      bottom: -30px;
+      right: -20px;
+      width: 100px;
+      z-index: 0;
+      opacity: .3;
     }
     span{
       position: absolute;
@@ -51,8 +53,14 @@ const Wrapper = Styled.div`
       top: 15px;
       left: 10px;
       text-transform: capitalize;
-      color: ${({ label }) =>
-        lightColor.includes(label) ? Color.black : "white"} ;
       font-weight: 800;
     }
+
+    ${({ label }) =>
+      label &&
+      css`
+        span {
+          color: ${Color.lightColors.includes(label) ? Color.black : "white"};
+        }
+      `}
 `;

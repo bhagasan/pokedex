@@ -1,13 +1,17 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Axios from "axios";
-import Styled from "styled-components";
+import Styled, { css } from "styled-components";
 import { Color } from "../../commons/Library";
-import Bar from "../../commons/Bar";
 
-export default function ItemDetailPage(props) {
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import Bar from "../../commons/Bar";
+import Label from "../../commons/Label";
+import IconBack from "../../../assets/icons/back-arrow.svg";
+import PokeBall from "../../../assets/icons/pokeball.svg";
+
+export default function ItemDetailPage() {
   const { id } = useParams();
   const img = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
   const [profile, setProfile] = useState();
@@ -47,7 +51,7 @@ export default function ItemDetailPage(props) {
       const temp = stats.map((d) => {
         total += d.base_stat;
         return (
-          <Fragment>
+          <Fragment key={d}>
             <label>{d.stat.name}</label>
             <Bar value={d.base_stat} />
           </Fragment>
@@ -66,6 +70,10 @@ export default function ItemDetailPage(props) {
   return (
     <div className="transition-item detail-page">
       <Wrapper bgColor={bgColor}>
+        <MainInfo bgColor={bgColor}>
+          <h1>{profile && profile.name}</h1>
+          <Label size="large">{profile && profile.types[0].type.name}</Label>
+        </MainInfo>
         <Thumbnail>
           <img src={img} alt="pokemon" />
         </Thumbnail>
@@ -75,18 +83,41 @@ export default function ItemDetailPage(props) {
               <Tab>About</Tab>
               <Tab>Base Stats</Tab>
             </TabList>
-
             <TabPanel>{renderAbout(profile)}</TabPanel>
             <TabPanel>{renderStats(profile)}</TabPanel>
           </Tabs>
         </Details>
         <Link className="back" to="/">
-          Back
+          <img src={IconBack} alt="back" /> Back
         </Link>
+        <img className="pokeball" src={PokeBall} alt="pokeball" />
       </Wrapper>
     </div>
   );
 }
+
+const MainInfo = Styled.div`
+  position: absolute;
+  top: 50px;
+  right: 10vw;
+  *{
+    text-transform: capitalize;
+  }
+  h1{
+    font-size: 72px;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  ${({ bgColor }) =>
+    bgColor &&
+    css`
+      h1 {
+        color: ${Color.lightColors.includes(bgColor) ? Color.black : "white"};
+      }
+    `}
+
+`;
 
 const Layout = Styled.div`
   display: grid;
@@ -98,22 +129,23 @@ const Layout = Styled.div`
 `;
 
 const Thumbnail = Styled.div`
-  margin-left: 10%;
+  margin-left: 5vw;
   img{
-    width: 420px;
+    width: 40vw;
   }
 `;
 
 const Details = Styled.div`
   position: absolute;
   top: 50%;
-  right: 10%;
+  right: 10vw;
   transform: translateY(-50%);
-  width: 45%;
+  width: 45vw;
   min-height: 300px;
   border-radius: 8px;
-  background-color: white;
+  background-color: rgba(255,255,255, 1);
   padding: 30px;
+  z-index: 2;
 `;
 
 const Wrapper = Styled.div`
@@ -127,5 +159,20 @@ const Wrapper = Styled.div`
     position: absolute;
     top: 30px;
     left: 40px;
+    display: flex;
+    align-items: center;
+    img{
+      display: inline-block;
+      margin-right: 10px;
+      width: 16px;
+    }
+  }
+
+  .pokeball{
+    position: fixed;
+    right: -10%;
+    bottom: -15%;
+    opacity: .25;
+    width: 55vw;
   }
 `;

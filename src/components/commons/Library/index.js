@@ -1,6 +1,6 @@
 export const Color = {
   normal: "#ebebe3",
-  fighting: "",
+  fighting: "#333333",
   flying: "#83C8E2",
   poison: "#47D2B2",
   ground: "#605a56",
@@ -24,4 +24,5 @@ export const Color = {
   green: "#47D2B2",
   blue: "#46b3e6",
   cream: "#ebebe3",
+  lightColors: ["electric", "normal", "fairy"],
 };

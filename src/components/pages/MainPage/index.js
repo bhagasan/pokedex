@@ -8,7 +8,7 @@ import { Container } from "../../commons/Layouts";
 import Pagination from "../../commons/Pagination";
 import Filter from "../../commons/Filter";
 
-export default function MainPage(props) {
+export default function MainPage() {
   const [pokemons, setPokemons] = useState([]);
   const [pokeDetail, setPokeDetail] = useState([]);
   const [nextList, setNextList] = useState();
@@ -47,7 +47,7 @@ export default function MainPage(props) {
             id,
             name,
             types,
-            // image: `https://pokeres.bastionbot.org/images/pokemon/${id}.png`,
+            image: `https://pokeres.bastionbot.org/images/pokemon/${id}.png`,
           },
         ]);
       });
@@ -137,13 +137,14 @@ export default function MainPage(props) {
 
 const PaginationWrapper = Styled.div`
   position: relative;
-  margin-left: auto;
+  margin: auto;
   margin-top: 30px;
   width: max-content;
 `;
 
 const Wrapper = Styled.div`
   position: relative;
+  
 `;
 
 const CardList = Styled.div`
