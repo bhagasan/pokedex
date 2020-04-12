@@ -16,6 +16,7 @@ export default function MainPage(props) {
   const [dataFilter, setDataFilter] = useState({});
   const [dataFilterApplied, setDataFilterApplied] = useState();
   const [filterSelected, setFilterSelected] = useState([]);
+  const [filterLabels, setFilterLabels] = useState();
 
   useEffect(() => {
     Axios.get("https://pokeapi.co/api/v2/pokemon/").then((res) => {
@@ -95,6 +96,7 @@ export default function MainPage(props) {
       temp.push(name);
     }
     applyFilter(temp);
+    setFilterLabels(temp);
     setFilterSelected(temp);
   }
 
@@ -108,6 +110,7 @@ export default function MainPage(props) {
     if (data.length > 0) {
       setDataFilterApplied(temp);
     } else {
+      setFilterLabels();
       setDataFilterApplied(null);
     }
   }
@@ -115,7 +118,11 @@ export default function MainPage(props) {
   return (
     <Wrapper>
       <Container>
-        <Filter data={dataFilter} filterHandler={selectFilterItem} />
+        <Filter
+          data={dataFilter}
+          filterHandler={selectFilterItem}
+          labels={filterLabels}
+        />
         <CardList>{renderList(dataFilterApplied || pokeDetail)}</CardList>
         <PaginationWrapper>
           <Pagination
@@ -143,5 +150,5 @@ const CardList = Styled.div`
   display: grid;
   grid-template-columns: repeat(5, max-content);
   grid-gap: 12px;
-  margin-top: 100px;
+  margin-top: 50px;
 `;

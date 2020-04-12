@@ -5,7 +5,7 @@ import { Color } from "../Library";
 import IconFilter from "../../../assets/icons/filter.svg";
 
 export default function Filter(props) {
-  const { data, filterHandler } = props;
+  const { data, filterHandler, labels } = props;
   const [isActive, setIsActive] = useState(false);
   const wrapperRef = useRef(null);
 
@@ -44,17 +44,64 @@ export default function Filter(props) {
     return temp;
   }
 
+  function renderLabelOutSide(data) {
+    if (data) {
+      return data.map((d) => (
+        <Label key={d} htmlFor={d}>
+          <input
+            type="checkbox"
+            name={d}
+            id={d}
+            onChange={filterHandler}
+            checked
+          />
+          <span>{d}</span>
+        </Label>
+      ));
+    }
+  }
+
   return (
-    <Wrapper isActive={isActive}>
+    <Wrapper isActive={isActive} ref={wrapperRef} labels={labels}>
       <Icon onClick={() => setIsActive(!isActive)}>
         <img src={IconFilter} alt="filter" />
       </Icon>
-      <Dropdown isActive={isActive} ref={wrapperRef}>
-        {renderList(data)}
-      </Dropdown>
+      {labels && <LabelActived>{renderLabelOutSide(labels)}</LabelActived>}
+
+      <Dropdown>{renderList(data)}</Dropdown>
     </Wrapper>
   );
 }
+
+const LabelActived = Styled.div`
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  height: 42px;
+  width: 800px;
+  max-width: max-content;
+  /* padding-left: 50px;
+  padding-right: 10px; */
+  background-color: white;
+  z-index: -1;
+  border-radius: 50px;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.15);
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  label{
+    :first-child{
+      margin-left: 50px;
+    }
+    :last-child{
+      margin-right: 10px;
+    }
+    :not(:last-child){
+      margin-right: 5px;
+    }
+  }
+`;
 
 const Title = Styled.div`
   border-bottom: 1px solid #eaeaea;
@@ -139,11 +186,23 @@ const Wrapper = Styled.div`
         box-shadow: none;
         background-color: #f6f8fc;
       }
+      ${LabelActived} {
+        width: 40px;
+        box-shadow: none;
+        overflow: hidden;
+        label {
+          span {
+            /* opacity: 0; */
+          }
+        }
+      }
       ${Dropdown} {
         opacity: 1;
         pointer-events: auto;
       }
     `}
+
+    
 `;
 const Icon = Styled.button`
   border: none;
