@@ -123,6 +123,31 @@ export default function MainPage() {
     }
   }
 
+  function renderLoadBtn() {
+    if (!filterLabels) {
+      return (
+        <PaginationWrapper>
+          {isLoadingSmall ? (
+            <Loading isLoading={isLoadingSmall} />
+          ) : (
+            <Pagination onNext={paginationHandler(nextList)} />
+          )}
+        </PaginationWrapper>
+      );
+    } else if (filterLabels.length === 0) {
+      return (
+        <PaginationWrapper>
+          {isLoadingSmall ? (
+            <Loading isLoading={isLoadingSmall} />
+          ) : (
+            <Pagination onNext={paginationHandler(nextList)} />
+          )}
+        </PaginationWrapper>
+      );
+    }
+    return;
+  }
+
   return (
     <Wrapper>
       <Loading isLoading={isLoading} type="full" />
@@ -134,13 +159,7 @@ export default function MainPage() {
           labels={filterLabels}
         />
         <CardList>{renderList(dataFilterApplied || pokeDetail)}</CardList>
-        <PaginationWrapper>
-          {isLoadingSmall ? (
-            <Loading isLoading={isLoadingSmall} />
-          ) : (
-            <Pagination onNext={paginationHandler(nextList)} />
-          )}
-        </PaginationWrapper>
+        {renderLoadBtn()}
         <img
           className="pokeball-main"
           src={PokeBall}

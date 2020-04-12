@@ -48,14 +48,8 @@ export default function Filter(props) {
   function renderLabelOutSide(data) {
     if (data) {
       return data.map((d) => (
-        <Label key={d} htmlFor={d}>
-          <input
-            type="checkbox"
-            name={d}
-            id={d}
-            onChange={filterHandler}
-            checked
-          />
+        <Label key={d} htmlFor={d} onClick={() => setIsActive(true)}>
+          <input type="checkbox" name={d} id={d} disabled checked />
           <span>{d}</span>
         </Label>
       ));

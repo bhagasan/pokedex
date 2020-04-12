@@ -103,6 +103,8 @@ const MainInfo = Styled.div`
   position: absolute;
   top: 50px;
   right: 10vw;
+  opacity: 0;
+  transition-duration: .3s;
   *{
     text-transform: capitalize;
   }
@@ -133,6 +135,9 @@ const Layout = Styled.div`
 
 const Thumbnail = Styled.div`
   margin-left: 5vw;
+  transform: translateX(-30px);
+  transition-duration: .3s;
+  opacity: 0;
   img{
     width: 40vw;
   }
@@ -142,13 +147,15 @@ const Details = Styled.div`
   position: absolute;
   top: 50%;
   right: 10vw;
-  transform: translateY(-50%);
+  transform: translateY(calc(-50% + 30px));
   width: 45vw;
   min-height: 300px;
   border-radius: 8px;
   background-color: rgba(255,255,255, 1);
   padding: 30px;
   z-index: 2;
+  transition-duration: .3s;
+  opacity: 0;
 `;
 
 const Wrapper = Styled.div`
@@ -161,6 +168,26 @@ const Wrapper = Styled.div`
   display: flex;
   align-items: center;
   background-color: ${({ bgColor }) => Color[bgColor]};
+
+  ${({ bgColor }) =>
+    bgColor &&
+    css`
+      ${MainInfo} {
+        opacity: 1;
+        transform: translate(0);
+        transition-delay: 0.5s;
+      }
+      ${Thumbnail} {
+        transform: translate(0);
+        transition-delay: 0.5s;
+        opacity: 1;
+      }
+      ${Details} {
+        transform: translateY(-50%);
+        transition-delay: 0.5s;
+        opacity: 1;
+      }
+    `}
 
   .back{
     position: absolute;
