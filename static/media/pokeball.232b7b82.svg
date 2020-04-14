@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="500"
+   height="500"
+   viewBox="0 0 500.00001 500.00001"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="pokeball.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="476.88692"
+     inkscape:cy="62.043807"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-552.36216)">
+    <path
+       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 250.51758 0 A 250 250 0 0 0 1.9042969 226.0625 L 122.10156 226.0625 A 130.71428 130.71428 0 0 1 250.51758 119.28516 A 130.71428 130.71428 0 0 1 378.94336 226.0625 L 499.32031 226.0625 A 250 250 0 0 0 250.51758 0 z M 250.51758 168.18945 A 81.809601 81.809601 0 0 0 168.70898 250 A 81.809601 81.809601 0 0 0 250.51953 331.81055 A 81.809601 81.809601 0 0 0 332.32812 250 A 81.809601 81.809601 0 0 0 250.51758 168.18945 z M 1.7167969 273.9375 A 250 250 0 0 0 250.51758 500 A 250 250 0 0 0 499.13281 273.9375 L 378.93359 273.9375 A 130.71428 130.71428 0 0 1 250.51758 380.71484 A 130.71428 130.71428 0 0 1 122.0918 273.9375 L 1.7167969 273.9375 z "
+       transform="translate(0,552.36216)"
+       id="path4136" />
+  </g>
+</svg>
